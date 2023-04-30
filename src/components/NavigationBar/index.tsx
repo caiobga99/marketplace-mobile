@@ -3,7 +3,7 @@ import { Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import Home from "../../screens/Home/index";
+import HomeStackScreen from "../../screens/HomeStackScreen/index";
 import Profile from "../../screens/Profile/index";
 
 const NavigationBar = () => {
@@ -23,6 +23,17 @@ const NavigationBar = () => {
 
   const screensNavigations: ScreenNavigationValues = [
     {
+      name: "Shopping",
+      component: HomeStackScreen,
+      options: {
+        title: "Shop",
+        toBarLabel: "Shop",
+        tabBarIcon: ({ size, color }) => {
+          return <AntDesign name="shoppingcart" size={size} color={color} />;
+        },
+      },
+    },
+    {
       name: "Perfil",
       component: Profile,
       options: {
@@ -34,19 +45,8 @@ const NavigationBar = () => {
       },
     },
     {
-      name: "Shopping",
-      component: Home,
-      options: {
-        title: "Shop",
-        toBarLabel: "Shop",
-        tabBarIcon: ({ size, color }) => {
-          return <AntDesign name="shoppingcart" size={size} color={color} />;
-        },
-      },
-    },
-    {
-      name: "Curtidos",
-      component: Home,
+      name: "Home",
+      component: HomeStackScreen,
       options: {
         title: "Favorite",
         toBarLabel: "Cart",
@@ -62,11 +62,18 @@ const NavigationBar = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
-        {screensNavigations.map(({ name, component, options }) => {
-          return (
-            <Tab.Screen name={name} component={component} options={options} />
-          );
-        })}
+        {screensNavigations.map(
+          ({ name, component, options }, index: number) => {
+            return (
+              <Tab.Screen
+                name={name}
+                key={index}
+                component={component}
+                options={options}
+              />
+            );
+          }
+        )}
       </Tab.Navigator>
     </NavigationContainer>
   );
