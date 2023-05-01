@@ -8,6 +8,7 @@ export interface Cars {
   fuel: string;
   id: number;
   brand: string;
+  isLiked: boolean;
 }
 
 const cars: Cars[] = [
@@ -27,6 +28,7 @@ const cars: Cars[] = [
     fuel: "GASOLINA",
     id: 1,
     brand: "CHEVROLET",
+    isLiked: false,
   },
   {
     title: "CHEVROLET C10 4.1 CS 8V 2P MANUAL",
@@ -44,6 +46,7 @@ const cars: Cars[] = [
     fuel: "GASOLINA",
     id: 2,
     brand: "CHEVROLET",
+    isLiked: false,
   },
   {
     title: "CHEVROLET OMEGA 3.0 MPFI CD 12V 4P AUTOMÁTICO",
@@ -61,6 +64,7 @@ const cars: Cars[] = [
     fuel: "GASOLINA",
     id: 3,
     brand: "CHEVROLET",
+    isLiked: false,
   },
   {
     title: "CHEVROLET IPANEMA 1.8 EFI GL 8V 4P MANUAL",
@@ -78,6 +82,7 @@ const cars: Cars[] = [
     fuel: "GASOLINA",
     id: 4,
     brand: "CHEVROLET",
+    isLiked: false,
   },
   {
     title: "FOX 1.0 MI 8V FLEX 4P MANUAL  4 PORTAS",
@@ -95,6 +100,7 @@ const cars: Cars[] = [
     fuel: "Flex",
     id: 5,
     brand: "Volkswagen",
+    isLiked: false,
   },
   {
     title: "FORD - FIESTA 1.6 Rocam SE Sedan 8V",
@@ -112,6 +118,7 @@ const cars: Cars[] = [
     fuel: "Flex",
     id: 6,
     brand: "FORD",
+    isLiked: false,
   },
   {
     title: "Toyota - HILUX - 3.0 SRV 4X4 CD 16V TURBO",
@@ -130,6 +137,7 @@ const cars: Cars[] = [
     fuel: "GASOLINA",
     id: 7,
     brand: "Toyota",
+    isLiked: false,
   },
   {
     title: "Voyage - 1.6 - CL 16V TURBO",
@@ -147,6 +155,7 @@ const cars: Cars[] = [
     fuel: "GASOLINA",
     id: 9,
     brand: "Voyage",
+    isLiked: false,
   },
   {
     title: "Kia - SORENTO 2.4 - 16V EX",
@@ -164,6 +173,7 @@ const cars: Cars[] = [
     fuel: "GASOLINA",
     id: 10,
     brand: "Kia",
+    isLiked: false,
   },
   {
     title: "FIAT TORO 1.8 16V EVO ENDURANCE AT6",
@@ -181,6 +191,7 @@ const cars: Cars[] = [
     fuel: "Flex",
     id: 11,
     brand: "FIAT",
+    isLiked: false,
   },
   {
     title: "FORD KA  1.0 8V SP MANUAL",
@@ -198,6 +209,7 @@ const cars: Cars[] = [
     fuel: "GASOLINA",
     id: 12,
     brand: "FORD",
+    isLiked: false,
   },
   {
     title: "CAMINHONETE FORD F-150 XLT Lariat 4x4 Shortbed",
@@ -215,6 +227,7 @@ const cars: Cars[] = [
     fuel: "GASOLINA",
     id: 13,
     brand: "FORD",
+    isLiked: false,
   },
 ];
 export default cars;
