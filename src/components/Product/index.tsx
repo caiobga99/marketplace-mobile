@@ -10,30 +10,29 @@ import {
   Inter_500Medium,
 } from "@expo-google-fonts/inter";
 import Loading from "../Loading";
+import ShowModal from "../ShowModal";
+import { RootState } from "../../redux/root-reducer";
+import { Cars } from "../../data/cars";
 
 const Product = ({ car, image }: any) => {
-  const [indexImage, setIndexImage] = useState(0);
-  const [isLiked, setIsLiked] = useState(false);
+  const [indexImage, setIndexImage] = useState<number>(0);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const { products } = useSelector(
-    (rootReducer: any) => rootReducer.cartReducer
-  );
 
+  const { products } = useSelector(
+    (rootReducer: RootState) => rootReducer.cartReducer
+  );
   const handleProductClick = () => {
     dispatch(addProductToCart(car));
-    products.filter((obj: any) => {
-      return obj.id === car.id ? setIsLiked(true) : setIsLiked(false);
-    });
-    console.log(products);
   };
 
   useEffect(() => {
-    products.some((vehicle: any) =>
+    products.some((vehicle: Cars) =>
       vehicle.id === car.id ? setIsLiked(true) : setIsLiked(false)
     );
   }, [car.id, products]);
 
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Inter_900Black,
     Inter_500Medium,
   });
@@ -41,9 +40,10 @@ const Product = ({ car, image }: any) => {
   if (!fontsLoaded)
     return (
       <View style={styles.container}>
-        <Loading page="Product" />
+        <Loading background="#fff" />
       </View>
     );
+
   return (
     <View style={styles.container}>
       <View
@@ -71,7 +71,7 @@ const Product = ({ car, image }: any) => {
           transition={true}
           PlaceholderContent={
             <View style={styles.image}>
-              <Loading page="Product" />
+              <Loading background="#fff"  />
             </View>
           }
         />
@@ -88,9 +88,22 @@ const Product = ({ car, image }: any) => {
         />
       </View>
       <View style={styles.row}>
-        <TouchableOpacity onPress={() => handleProductClick()}>
-          <AntDesign name="heart" size={24} color={isLiked ? "red" : "black"} />
-        </TouchableOpacity>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around",
+            width: "30%",
+          }}
+        >
+          <TouchableOpacity onPress={() => handleProductClick()}>
+            <AntDesign
+              name="heart"
+              size={24}
+              color={car.isLiked || isLiked ? "red" : "black"}
+            />
+          </TouchableOpacity>
+          <ShowModal car={car} image={image} />
+        </View>
         <Text style={styles.price}>{car.price}</Text>
       </View>
       <View style={styles.row}>
