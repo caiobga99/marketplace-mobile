@@ -1,11 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import HomeStackScreen from "../../screens/HomeStackScreen/index";
-import Profile from "../../screens/Profile/index";
 
+import {
+  FavoriteStackScreen,
+  HomeStackScreen,
+  ProfileStackScreen,
+} from "../StackNavigation/index";
 const NavigationBar = () => {
   const Tab = createBottomTabNavigator();
 
@@ -34,19 +36,8 @@ const NavigationBar = () => {
       },
     },
     {
-      name: "Perfil",
-      component: Profile,
-      options: {
-        title: "Perfil",
-        toBarLabel: "Perfil",
-        tabBarIcon: ({ size, color }) => {
-          return <AntDesign name="user" size={size} color={color} />;
-        },
-      },
-    },
-    {
-      name: "Home",
-      component: HomeStackScreen,
+      name: "Favoritos",
+      component: FavoriteStackScreen,
       options: {
         title: "Favorite",
         toBarLabel: "Cart",
@@ -54,6 +45,17 @@ const NavigationBar = () => {
           return (
             <MaterialIcons name="favorite-border" size={size} color={color} />
           );
+        },
+      },
+    },
+    {
+      name: "Perfil",
+      component: ProfileStackScreen,
+      options: {
+        title: "Perfil",
+        toBarLabel: "Perfil",
+        tabBarIcon: ({ size, color }) => {
+          return <AntDesign name="user" size={size} color={color} />;
         },
       },
     },
