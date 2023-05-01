@@ -1,11 +1,19 @@
 import UserActionTypes from "./action-types";
+import { IUser } from "./actions";
 
-const initialState = {
+interface IinitialState {
+  currentUser: null | IUser;
+}
+interface IAction {
+  type: string;
+  payload: IUser;
+}
+
+const initialState: IinitialState = {
   currentUser: null,
 };
 
-const userReducer = (state = initialState, action: any) => {
-
+const userReducer = (state = initialState, action: IAction) => {
   switch (action.type) {
     case UserActionTypes.LOGIN:
       return { ...state, currentUser: action.payload };
