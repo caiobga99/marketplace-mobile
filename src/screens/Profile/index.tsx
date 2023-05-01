@@ -1,14 +1,12 @@
 import {
   View,
-  Image,
   TouchableOpacity,
   Text,
   StyleSheet,
   ScrollView,
   TextInput,
 } from "react-native";
-import { useState } from "react";
-import Constants from "expo-constants";
+
 import {
   useFonts,
   Inter_900Black,
@@ -20,6 +18,9 @@ import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 
 import Button from "../../components/Button/index";
 import Loading from "../../components/Loading/index";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, logoutUser } from "../../redux/user/actions";
+import { RootState } from "../../redux/root-reducer";
 
 interface FormData {
   name: string;
@@ -28,12 +29,10 @@ interface FormData {
   bio: string;
 }
 const Profile = () => {
-  const [userForm, setUserForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    bio: "",
-  });
+  const dispatch = useDispatch();
+
+  const { currentUser } = useSelector((state: RootState) => state.userReducer);
+ 
   const {
     handleSubmit,
     control,
@@ -42,13 +41,9 @@ const Profile = () => {
   } = useForm<FormData>();
 
   const onSubmit = ({ name, email, password, bio }: FormData) => {
-    setUserForm({
-      ...userForm,
-      name: name,
-      email: email,
-      password: password,
-      bio: bio,
-    });
+    dispatch(
+      loginUser({ name: name, email: email, password: password, bio: bio })
+    );
     reset({
       name: "",
       email: "",
@@ -56,7 +51,7 @@ const Profile = () => {
       bio: "",
     });
   };
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Inter_900Black,
     Inter_500Medium,
   });
@@ -68,12 +63,17 @@ const Profile = () => {
       <View style={styles.container}>
         <View style={styles.imageRight}>
           <TouchableOpacity>
-            <MaterialIcons name="logout" size={45} color="black" />
+            <MaterialIcons
+              name="logout"
+              size={45}
+              color="black"
+              onPress={() => dispatch(logoutUser())}
+            />
           </TouchableOpacity>
         </View>
         <FontAwesome name="user-circle" size={100} color="black" />
         <Text style={styles.name}>
-          {userForm.name === "" ? "Adicione um Nome" : userForm.name}
+          {currentUser === null ? "Adicione um Nome" : currentUser.name}
         </Text>
         <View style={styles.formGroup}>
           <Text style={styles.label}>Nome</Text>
@@ -81,7 +81,9 @@ const Profile = () => {
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                placeholder={userForm.name === "" ? "Seu Nome" : userForm.name}
+                placeholder={
+                  currentUser === null ? "Seu Nome" : currentUser.name
+                }
                 style={[styles.input, errors?.name && styles.inputError]}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
@@ -110,7 +112,7 @@ const Profile = () => {
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
                 placeholder={
-                  userForm.email === "" ? "Seu E-mail" : userForm.email
+                  currentUser === null ? "Seu E-mail" : currentUser.email
                 }
                 style={[styles.input, errors?.email && styles.inputError]}
                 onBlur={onBlur}
@@ -146,7 +148,7 @@ const Profile = () => {
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
                 placeholder={
-                  userForm.password === "" ? "Sua Senha" : userForm.password
+                  currentUser === null ? "Sua Senha" : currentUser.password
                 }
                 style={[styles.input, errors?.password && styles.inputError]}
                 onBlur={onBlur}
@@ -182,7 +184,7 @@ const Profile = () => {
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
                   placeholder={
-                    userForm.bio === "" ? "Sua Biografia" : userForm.bio
+                    currentUser === null ? "Sua Biografia" : currentUser.bio
                   }
                   style={[
                     styles.textArea,
@@ -228,7 +230,6 @@ const Profile = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Constants.statusBarHeight,
     height: "100%",
     width: "100%",
     backgroundColor: "#efefef",
@@ -259,7 +260,7 @@ const styles = StyleSheet.create({
   },
 
   imageRight: {
-    paddingTop: Constants.statusBarHeight,
+    padding: "1%",
     width: "100%",
     position: "absolute",
     alignItems: "flex-end",
